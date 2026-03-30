@@ -19,8 +19,6 @@ Une interface fluide pour naviguer entre vos différentes guildes et accéder au
 
 GÉRER : Un clic suffit pour ouvrir l'éditeur de rôles et de salons.
 
-OSINT Tool Integration : Modules de reconnaissance intégrés pour chaque serveur.
-
 ✉️ 3. [Centre de Messagerie](src/assets/messenger.png)
 Un moteur de diffusion puissant pour envoyer des messages ou des commandes à travers vos terminaux sélectionnés.
 
