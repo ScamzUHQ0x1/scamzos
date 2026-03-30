@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PULSE OS</title>
+    <title>SCAMZ OS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(147, 51, 234, 0.3); border-radius: 10px; }
+        .perm-btn.active-allow { background: #10b981 !important; color: white !important; }
+        .perm-btn.active-deny { background: #ef4444 !important; color: white !important; }
+        .perm-btn.active-neutral { background: rgba(255, 255, 255, 0.1) !important; color: white !important; }
+        select option { background: #18181b; color: white; }
+    </style>
 </head>
 <body class="bg-[#0b0e14] text-slate-300 font-sans overflow-hidden select-none">
 
@@ -16,12 +25,12 @@
                 <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(147,51,234,0.3)]">
                     <i class="fa-solid fa-bolt text-white text-xl"></i>
                 </div>
-                <h1 class="text-2xl font-black text-white tracking-tighter">PULSE<span class="text-purple-500">OS</span></h1>
+                <h1 class="text-2xl font-black text-white tracking-tighter">SCAMZ<span class="text-purple-500">OS</span></h1>
             </div>
             
             <div class="space-y-6">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 block">Discord Bot Token</label>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 block text-center">Discord Bot Token (Local Connection)</label>
                     <input type="password" id="token-input" placeholder="MTA4..." class="w-full bg-black/40 border border-white/5 rounded-xl px-5 py-4 text-white outline-none focus:border-purple-500/50 transition-all placeholder:text-slate-700">
                 </div>
                 <button id="login-btn" class="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-bold text-sm tracking-widest transition-all active:scale-[0.98] shadow-lg shadow-purple-600/20">
@@ -39,7 +48,7 @@
                     <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-600/20">
                         <i class="fa-solid fa-bolt text-white text-sm"></i>
                     </div>
-                    <span class="font-black text-white tracking-tighter text-lg uppercase">Pulse<span class="text-purple-500">os</span></span>
+                    <span class="font-black text-white tracking-tighter text-lg uppercase">SCAMZ<span class="text-purple-500">os</span></span>
                 </div>
             </div>
 
@@ -50,20 +59,23 @@
             </div>
 
             <nav class="flex-1 px-3 space-y-1">
-                <button onclick="switchTab('dashboard')" class="nav-item active w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
                     <i class="fa-solid fa-table-cells-large text-lg group-hover:text-purple-500"></i> Dashboard
                 </button>
-                <button onclick="switchTab('serveurs')" class="nav-item w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
+                <button onclick="switchTab('serveurs')" id="nav-serveurs" class="nav-item w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
                     <i class="fa-solid fa-server text-lg group-hover:text-purple-500"></i> Serveurs
                 </button>
-                <button onclick="switchTab('messenger')" class="nav-item w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
+                <button onclick="switchTab('messenger')" id="nav-messenger" class="nav-item w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
                     <i class="fa-solid fa-comment-dots text-lg group-hover:text-purple-500"></i> Messenger
+                </button>
+                <button onclick="switchTab('promo')" id="nav-promo" class="nav-item w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
+                    <i class="fa-solid fa-star text-lg group-hover:text-yellow-500"></i> Contact
                 </button>
             </nav>
 
             <div class="p-4 mt-auto border-t border-white/5">
                 <button class="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-white transition-colors text-sm font-medium">
-                    <i class="fa-solid fa-gear"></i> Paramètres
+                    <i class="fa-solid fa-gear"></i> 
                 </button>
             </div>
         </aside>
@@ -75,9 +87,9 @@
                     <h2 id="current-tab-title" class="text-sm font-bold text-white uppercase tracking-widest">Aperçu</h2>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="windowControl('minimize')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-all"><i class="fa-solid fa-minus"></i></button>
-                    <button onclick="windowControl('maximize')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-all"><i class="fa-solid fa-clone text-xs"></i></button>
-                    <button onclick="windowControl('close')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-500/20 text-slate-500 hover:text-red-500 transition-all"><i class="fa-solid fa-xmark"></i></button>
+                    <button onclick="ipcRenderer.send('window-minimize')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-all"><i class="fa-solid fa-minus"></i></button>
+                    <button onclick="ipcRenderer.send('window-maximize')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-all"><i class="fa-solid fa-clone text-xs"></i></button>
+                    <button onclick="ipcRenderer.send('window-close')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-500/20 text-slate-500 hover:text-red-500 transition-all"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </header>
 
@@ -86,8 +98,8 @@
                 <div id="tab-dashboard" class="tab-content p-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/5 border border-white/5 rounded-2xl p-6 hover:border-purple-500/30 transition-all">
-                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Status API</p>
-                            <h3 class="text-3xl font-black text-white">-- ms</h3>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Mode Connexion</p>
+                            <h3 class="text-3xl font-black text-white">DIRECT</h3>
                         </div>
                         <div class="bg-white/5 border border-white/5 rounded-2xl p-6 border-l-4 border-l-purple-600">
                             <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Serveurs</p>
@@ -95,24 +107,24 @@
                         </div>
                         <div class="bg-white/5 border border-white/5 rounded-2xl p-6">
                             <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Utilisateur</p>
-                            <h3 id="bot-name" class="text-3xl font-black text-white italic">{uhq}</h3>
+                            <h3 id="bot-name" class="text-3xl font-black text-white italic">---</h3>
                         </div>
                     </div>
 
                     <div class="bg-[#0d1117] border border-white/5 rounded-2xl overflow-hidden">
                         <div class="px-6 py-4 border-b border-white/5 flex items-center gap-3">
                             <i class="fa-solid fa-terminal text-purple-500 text-xs"></i>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Console Log</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Console Log Local</span>
                         </div>
                         <div id="terminal" class="p-6 h-64 overflow-y-auto font-mono text-xs space-y-2">
-                            <p class="text-slate-600"><span class="bg-white/5 px-2 py-0.5 rounded">Système Pulse OS prêt.</span></p>
+                            <p class="text-slate-600"><span class="bg-white/5 px-2 py-0.5 rounded">Système OS Local prêt.</span></p>
                         </div>
                     </div>
                 </div>
 
                 <div id="tab-serveurs" class="tab-content hidden p-8">
-                    <div class="flex items-center justify-center h-64 text-slate-500 italic">
-                        Chargement de la grille des serveurs...
+                    <div class="flex items-center justify-center h-64 text-slate-500 italic uppercase text-[10px] tracking-widest">
+                        Connectez-vous pour voir vos serveurs
                     </div>
                 </div>
 
@@ -121,13 +133,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Serveur Cible</label>
-                                <select id="guild-select" class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-5 py-4 text-white outline-none focus:border-purple-500/50 transition-all appearance-none">
+                                <select id="msg-server-select" class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-5 py-4 text-white outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer">
                                     <option value="">Sélectionner un serveur</option>
                                 </select>
                             </div>
                             <div class="space-y-2">
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Salon Textuel</label>
-                                <select id="channel-select" class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-5 py-4 text-white outline-none focus:border-purple-500/50 transition-all appearance-none">
+                                <select id="msg-channel-select" class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-5 py-4 text-white outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer">
                                     <option value="">Sélectionner un salon</option>
                                 </select>
                             </div>
@@ -135,10 +147,52 @@
 
                         <div class="relative group">
                             <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 block ml-1">Message</label>
-                            <textarea id="message-content" placeholder="Écrivez votre message ici..." class="w-full h-80 bg-[#0d1117] border border-white/10 rounded-2xl p-8 text-white outline-none focus:border-purple-500/50 transition-all resize-none shadow-inner"></textarea>
+                            <textarea id="msg-content" placeholder="Écrivez votre message ici..." class="w-full h-80 bg-[#0d1117] border border-white/10 rounded-2xl p-8 text-white outline-none focus:border-purple-500/50 transition-all resize-none shadow-inner"></textarea>
                             <button id="send-msg-btn" class="absolute bottom-6 right-6 px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-xl shadow-purple-600/20">
                                 ENVOYER <i class="fa-solid fa-paper-plane text-xs"></i>
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-promo" class="tab-content hidden p-8 h-full flex items-center justify-center">
+                    <div class="w-full max-w-2xl bg-[#0d1117] border border-white/5 rounded-[40px] p-12 text-center shadow-2xl">
+                        <h2 class="text-4xl font-black italic uppercase text-white mb-2 tracking-tighter">CONTACT <span class="text-purple-600"></span></h2>
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.5em] mb-12"></p>
+                        
+                        <div class="space-y-4">
+                            <div onclick="copyToClipboard('scamzuhq')" class="group flex items-center justify-between p-6 bg-black/40 border border-white/5 rounded-3xl cursor-pointer hover:border-indigo-500/50 transition-all">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-500"><i class="fa-brands fa-discord text-2xl"></i></div>
+                                    <div class="text-left">
+                                        <p class="text-[10px] font-black text-slate-500 uppercase italic">Discord</p>
+                                        <p class="text-white font-bold tracking-tight">scamzuhq</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-copy text-slate-600 group-hover:text-white"></i>
+                            </div>
+
+                            <a href="https://t.me/scamzuhq" target="_blank" class="flex items-center justify-between p-6 bg-black/40 border border-white/5 rounded-3xl hover:border-sky-500/50 transition-all">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-sky-600/10 rounded-2xl flex items-center justify-center text-sky-500"><i class="fa-brands fa-telegram text-2xl"></i></div>
+                                    <div class="text-left">
+                                        <p class="text-[10px] font-black text-slate-500 uppercase italic">Telegram</p>
+                                        <p class="text-white font-bold tracking-tight">@scamzuhq</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-slate-600"></i>
+                            </a>
+
+                            <a href="https://guns.lol/scamz" target="_blank" class="flex items-center justify-between p-6 bg-black/40 border border-white/5 rounded-3xl hover:border-purple-500/50 transition-all">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center text-purple-500"><i class="fa-solid fa-crosshairs text-2xl"></i></div>
+                                    <div class="text-left">
+                                        <p class="text-[10px] font-black text-slate-500 uppercase italic">Website</p>
+                                        <p class="text-white font-bold tracking-tight">guns.lol/scamz</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-slate-600"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
