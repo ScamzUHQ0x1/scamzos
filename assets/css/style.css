@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #0c0c0e;
+    color: #e1e1e6;
+}
+
+.drag-region {
+    -webkit-app-region: drag;
+}
+
+.drag-region button {
+    -webkit-app-region: no-drag;
+}
+
+.glass {
+    background: #141417;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.active {
+    background-color: #9333ea;
+    color: white !important;
+    box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.4);
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(147, 51, 234, 0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(147, 51, 234, 0.4);
+}
+
+input, textarea, select {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
